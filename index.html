@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/filter.css">
+        <link rel="stylesheet" href="css/nouislider.min.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <link rel="stylesheet" href="css/slideshow.css">
+        <link rel="stylesheet" href="css/nav-style.css">
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,400i,700&display=swap" rel="stylesheet">
+        <style>
+        html {
+            background-color: white;
+            width: 100%;
+            height: 80%;
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            width: 100%;
+            height: 120%;
+            padding: 0;
+            margin: 0;
+			background-image: url('images/bg.jpeg');
+			/* background-position: center; */
+			background-size: cover; 
+        }
+        </style>
+        <link rel="icon" href="images/logo-stis.png" type="image/png">
+        <title>Home | Deteksi Sampah Plastik</title>
+    </head>
+    <body>
+        <!-- BATAS -->
+        <header>
+            <div class="nav-wrapper">
+                <div class="logo-container">
+                    <img class="logo" src="images/logo-stis.png" alt="Logo">
+                    <div class="nav-judul">
+                        Dashboard Visualisasi Sampah Plastik di Pantai Kuta
+                    </div>
+                </div>
+                <nav>
+                    <input class="hidden" type="checkbox" id="menuToggle">
+                    <label class="menu-btn" for="menuToggle">
+                        <div class="menu"></div>
+                        <div class="menu"></div>
+                        <div class="menu"></div>
+                    </label>
+                    <div class="nav-container">
+                        <ul class="nav-tabs">
+                            <li class="nav-tab"><a href="index.html">Home</a></li>
+                            <li class="nav-tab"><a href="dashboard.html">Dashboard</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+		<div class="container1">
+            <div class="cont11">
+                Selamat Datang di Dashboard Visualisasi<br>Hasil Deteksi Sampah Plastik di Pantai Kuta
+            </div>
+			<div class="cont12">
+                <p>
+                    Pencemaran sampah plastik pada ekosistem laut saat ini masih menjadi permasalahan global. Permasalahan terkait pencemaran laut menjadi salah satu tujuan global yang disepakati oleh Perserikatan Bangsa-Bangsa (PBB) yang dikenal dengan <i>Sustainable Development Goals</i> (SDGs). Salah satu target dari tujuan ke-14 SDGs adalah mencegah dan mengurangi berbagai pencemaran laut, termasuk sampah laut. Pencemaran laut menjadi hal yang krusial karena dapat berdampak pada berbagai aspek, seperti mengurangi hasil tangkapan nelayan, merusak ekosistem laut, serta menurunkan daya Tarik wisata. Oleh karena itu, <i>dashboard</i> ini dibangun untuk mempermudah pemerintah ataupun pihak yang berwenang dalam proses analisis, pemantauan, serta mitigasi pencemaran sampah plastik di wilayah Pantai Kuta tahun 2019-2023.
+                </p>
+            </div>
+		</div>
+
+        <div class="container2">
+            <div class="container-isi">
+                <h2>Permasalahan Pencemaran Sampah Plastik di Lautan</h2>
+                <p>
+                    Pantai Kuta sebagai salah satu destinasi wisata terpopuler di Bali ternyata masih menghadapi tantangan terkait pencemaran laut. Menurut Kementerian Lingkungan Hidup dan Kehutanan (KLHK), tercatat bahwa terdapat sekitar 30 ton sampah perhari yang mencemari Pantai Kuta akibat fenomena sampah kiriman yang bersumber dari sampah rumah tangga. Hasil pemantauan sampah laut oleh KLHK yang ditunjukkan pada Gambar 1 menunjukkan bahwa jenis sampah yang paling mendominasi adalah sampah plastik. Permasalahan ini menjadi salah satu tujuan global ke-14 dalam SDGs yang diharapkan dapat segera teratasi.
+                </p>
+                <figure>
+                    <img src="images/sampah-kuta.png" alt="gambar-sampah">
+                    <figcaption>Gambar 1. Hasil Pemantauan Sampah Laut Kabupaten Badung Tahun 2021</figcaption>
+                </figure>
+                <h2>Penggunaan Citra Satelit Sentinel-2 dalam Deteksi Sampah Plastik</h2>
+                <p>
+                    Adanya permasalahan pencemaran sampah di laut tentunya membutuhkan pemantauan serta pengelolaan sampah yang lebih baik. KLHK melalui Direktorat Pengendalian Pencemaran dan Kerusakan Pesisir dan Laut (Dit. PPKPL) telah berupaya untuk melakukan pemantauan sampah laut melalui sebuah survei, yaitu Survei Pemantauan Sampah Laut. Akan tetapi, kegiatan tersebut masih menggunakan metode konvensional yang cukup menghabiskan sumber daya. Oleh karena itu, penelitian ini pendeteksian sampah plastik di wilayah Pantai Kuta memanfaatkan teknologi penginderaan jauh dengan citra satelit Sentinel-2 yang lebih efektif dan efisien.
+                </p>
+                <p>Data citra Sentinel-2 Pantai Kuta diperoleh dari <i>platform Google Earth Engine</i> (GEE). Data yang diambil berupa data tahun 2019-2023. <i>Patch</i> Pantai Kuta berukuran 2,56 km x 2,56 km dengan titik <i>centroid</i> -8.716491, 115.158797. Area tersebut mencakup wilayah pesisir dan perairan Pantai Kuta seperti yang ditunjukkan pada Gambar 2.</p>
+                <figure>
+                    <img src="images/layout_kuta.png" alt="wilayah-studi">
+                    <figcaption>Gambar 2. Peta Wilayah Studi Pantai Kuta</figcaption>
+                </figure>
+                <p>
+                    Data yang digunakan untuk <i>training set</i> dan <i>testing set</i> adalah data <i>open-access</i> Marine Debris Archive (MARIDA) yang telah dibangun oleh Kikaki et al (2022). Dataset MARIDA dibangun berdasarkan citra satelit Sentinel-2 yang dapat diperoleh dari <i>repository online</i> Zenodo. MARIDA menyediakan 837.357 piksel yang telah dianotasi ke dalam 15 kelas tematik, termasuk kelas sampah plastik. MARIDA dikumpulkan pada periode 2015 hingga 2021 di sebelas negara, yaitu Honduras, Guatemala, Haiti, Santo Domingo, Vietnam, Afrika Selatan, Skotlandia, Indonesia, Filipina, Korea Selatan, dan China.
+                </p>
+                <h2>Indeks Komposit Spektral Untuk Deteksi Sampah Plastik</h2>
+                <p>Dalam mendeteksi sampah plastik, digunakan 9 indeks komposit spektral yang diperoleh dari kombinasi pita spektral Sentinel-2. Masing-masing indeks komposit spektral yang digunakan dapat mencirikan objek tertentu untuk memisahkan sampah plastik dengan objek lainnya. Berikut adalah indeks komposit spektral yang digunakan dalam penelitian ini.</p>
+                <h3>1. Normalize Difference Vegetation Index (NDVI)</h3>
+                <p>NDVI merupakan indeks yang memberikan gambaran terkait tingkat kehijauan suatu vegetasi. Nilai NDVI diperoleh dari kombinasi anatara band NIR dan band merah citra Sentinel-2.</p>
+                <h3>2. Floating Algae Index (FAI)</h3>
+                <p>FAI merupakan indeks yang digunakan untuk mengetahui keberadaan objek laut berupa makroalga. Nilai FAI diperoleh dari kombinasi anatara band NIR, band SWIR dan band merah citra Sentinel-2.</p>
+                <h3>3. Floating Debris Index (FDI)</h3>
+                <p>FDI merupakan indeks yang dibentuk untuk mendeteksi makroplastik yang mengapung di lautan. Nilai FDI diperoleh dari kombinasi anatara band NIR, band SWIR dan band RE2 citra Sentinel-2.</p>
+                <h3>4. Shadow Index (SI)</h3>
+                <p>SI merupakan indeks yang digunakan untuk mengetahui daerah vegetasi yang tertutupi oleh bayangan awan. Nilai SI diperoleh dari kombinasi anatara band merah, biru, dan hijau citra Sentinel-2. </p>
+                <h3>5. Normalize Difference Water Index (NDWI)</h3>
+                <p>NDWI merupakan indeks yang digunakan untuk mengidentifikasi fitur perairan terbuka. Nilai NDWI diperoleh dari kombinasi anatara band hijau dan band NIR citra Sentinel-2.</p>
+                <h3>6. NRD</h3>
+                <p>NRD merupakan indeks yang digunakan untuk mendeteksi kesehatan vegetasi. Nilai NRD diperoleh dari selisih antara band NIR dan band merah citra Sentinel-2.</p>
+                <h3>7. Normalized Difference Moisture Index (NDMI)</h3>
+                <p>NDMI merupakan indeks yang digunakan untuk mengidentifikasi kandungan air pada suatu vegetasi. Nilai NDMI diperoleh dari kombinasi anatara band NIR dan band SWIR citra Sentinel-2. </p>
+                <h3>8. Bare Soil Index (BSI)</h3>
+                <p>BSI merupakan indeks yang digunakan untuk mengidentifikasi area berupa tanah terbuka. Nilai BSI diperoleh dari kombinasi anatara band NIR, band SWIR, band merah dan band biru citra Sentinel-2.</p>
+                <h3>9. Adjusted Plastic Index (API)</h3>
+                <p>API merupakan indeks yang digunakan untuk mengidentifikasi sampah plastik pada perairan yang tercampur dengan vegetasi dan tutupan lahan. Nilai API diperoleh dari kombinasi antara hasil perhitungan PI, NDVI, dan MNDBI. </p>
+                <p>Visualisasi sebaran kesembilan nilai indeks komposit spektral di Pantai Kuta tahun 2019-2023 ditunjukkan pada Gambar 3 - Gambar 47.</p>
+                <div class="slideshow-container">
+
+                    <div class="mySlides fade">
+                      <div class="numbertext">1 / 45</div>
+                      <figure>
+                        <img src="images/NDVI_2019.png">
+                        <figcaption>Gambar 3. NDVI Pantai Kuta Tahun 2019</figcaption>
+                      </figure>
+                    </div>
+                    
+                    <div class="mySlides fade">
+                      <div class="numbertext">2 / 45</div>
+                      <figure>
+                        <img src="images/NDVI_2020.png">
+                        <figcaption>Gambar 4. NDVI Pantai Kuta Tahun 2020</figcaption>
+                      </figure>
+                    </div>
+                    
+                    <div class="mySlides fade">
+                        <div class="numbertext">3 / 45</div>
+                        <figure>
+                          <img src="images/NDVI_2021.png">
+                          <figcaption>Gambar 5. NDVI Pantai Kuta Tahun 2021</figcaption>
+                        </figure>
+                      </div>
+                    
+                    <div class="mySlides fade">
+                        <div class="numbertext">4 / 45</div>
+                        <figure>
+                          <img src="images/NDVI_2022.png">
+                          <figcaption>Gambar 6. NDVI Pantai Kuta Tahun 2022</figcaption>
+                        </figure>
+                    </div>
+
+                    <div class="mySlides fade">
+                        <div class="numbertext">5 / 45</div>
+                        <figure>
+                          <img src="images/NDVI_2023.png">
+                          <figcaption>Gambar 7. NDVI Pantai Kuta Tahun 2023</figcaption>
+                        </figure>
+                    </div>
+                    <div class="mySlides fade">
+                        <div class="numbertext">6 / 45</div>
+                        <figure>
+                          <img src="images/FAI_2019.png">
+                          <figcaption>Gambar 8. FAI Pantai Kuta Tahun 2019</figcaption>
+                        </figure>
+                      </div>
+                      
+                      <div class="mySlides fade">
+                        <div class="numbertext">7 / 45</div>
+                        <figure>
+                          <img src="images/FAI_2020.png">
+                          <figcaption>Gambar 9. FAI Pantai Kuta Tahun 2020</figcaption>
+                        </figure>
+                      </div>
+                      
+                      <div class="mySlides fade">
+                          <div class="numbertext">8 / 45</div>
+                          <figure>
+                            <img src="images/FAI_2021.png">
+                            <figcaption>Gambar 10. FAI Pantai Kuta Tahun 2021</figcaption>
+                          </figure>
+                        </div>
+                      
+                      <div class="mySlides fade">
+                          <div class="numbertext">9 / 45</div>
+                          <figure>
+                            <img src="images/FAI_2022.png">
+                            <figcaption>Gambar 11. FAI Pantai Kuta Tahun 2022</figcaption>
+                          </figure>
+                      </div>
+  
+                      <div class="mySlides fade">
+                          <div class="numbertext">10 / 45</div>
+                          <figure>
+                            <img src="images/FAI_2023.png">
+                            <figcaption>Gambar 12. FAI Pantai Kuta Tahun 2023</figcaption>
+                          </figure>
+                      </div>
+                      <div class="mySlides fade">
+                        <div class="numbertext">11 / 45</div>
+                        <figure>
+                          <img src="images/FDI_2019.png">
+                          <figcaption>Gambar 13. FDI Pantai Kuta Tahun 2019</figcaption>
+                        </figure>
+                      </div>
+                      
+                      <div class="mySlides fade">
+                        <div class="numbertext">12 / 45</div>
+                        <figure>
+                          <img src="images/FDI_2020.png">
+                          <figcaption>Gambar 14. FDI Pantai Kuta Tahun 2020</figcaption>
+                        </figure>
+                      </div>
+                      
+                      <div class="mySlides fade">
+                          <div class="numbertext">13 / 45</div>
+                          <figure>
+                            <img src="images/FDI_2021.png">
+                            <figcaption>Gambar 15. FDI Pantai Kuta Tahun 2021</figcaption>
+                          </figure>
+                        </div>
+                      
+                      <div class="mySlides fade">
+                          <div class="numbertext">14 / 45</div>
+                          <figure>
+                            <img src="images/FDI_2022.png">
+                            <figcaption>Gambar 16. FDI Pantai Kuta Tahun 2022</figcaption>
+                          </figure>
+                      </div>
+  
+                      <div class="mySlides fade">
+                          <div class="numbertext">15 / 45</div>
+                          <figure>
+                            <img src="images/FDI_2023.png">
+                            <figcaption>Gambar 17. FDI Pantai Kuta Tahun 2023</figcaption>
+                          </figure>
+                      </div>
+                      <div class="mySlides fade">
+                        <div class="numbertext">16 / 45</div>
+                        <figure>
+                          <img src="images/SI_2019.png">
+                          <figcaption>Gambar 18. SI Pantai Kuta Tahun 2019</figcaption>
+                        </figure>
+                      </div>
+                      
+                      <div class="mySlides fade">
+                        <div class="numbertext">17 / 45</div>
+                        <figure>
+                          <img src="images/SI_2020.png">
+                          <figcaption>Gambar 19. SI Pantai Kuta Tahun 2020</figcaption>
+                        </figure>
+                      </div>
+                      
+                      <div class="mySlides fade">
+                          <div class="numbertext">18 / 45</div>
+                          <figure>
+                            <img src="images/SI_2021.png">
+                            <figcaption>Gambar 20. SI Pantai Kuta Tahun 2021</figcaption>
+                          </figure>
+                        </div>
+                      
+                      <div class="mySlides fade">
+                          <div class="numbertext">19 / 45</div>
+                          <figure>
+                            <img src="images/SI_2022.png">
+                            <figcaption>Gambar 21. SI Pantai Kuta Tahun 2022</figcaption>
+                          </figure>
+                      </div>
+  
+                      <div class="mySlides fade">
+                          <div class="numbertext">20 / 45</div>
+                          <figure>
+                            <img src="images/SI_2023.png">
+                            <figcaption>Gambar 22. SI Pantai Kuta Tahun 2023</figcaption>
+                          </figure>
+                      </div>
+                      <div class="mySlides fade">
+                        <div class="numbertext">21 / 45</div>
+                        <figure>
+                          <img src="images/NDWI_2019.png">
+                          <figcaption>Gambar 23. NDWI Pantai Kuta Tahun 2019</figcaption>
+                        </figure>
+                      </div>
+                      
+                      <div class="mySlides fade">
+                        <div class="numbertext">22 / 45</div>
+                        <figure>
+                          <img src="images/NDWI_2020.png">
+                          <figcaption>Gambar 24. NDWI Pantai Kuta Tahun 2020</figcaption>
+                        </figure>
+                      </div>
+                      
+                      <div class="mySlides fade">
+                          <div class="numbertext">23 / 45</div>
+                          <figure>
+                            <img src="images/NDWI_2021.png">
+                            <figcaption>Gambar 25. NDWI Pantai Kuta Tahun 2021</figcaption>
+                          </figure>
+                        </div>
+                      
+                      <div class="mySlides fade">
+                          <div class="numbertext">24 / 45</div>
+                          <figure>
+                            <img src="images/NDWI_2022.png">
+                            <figcaption>Gambar 26. NDWI Pantai Kuta Tahun 2022</figcaption>
+                          </figure>
+                      </div>
+  
+                      <div class="mySlides fade">
+                          <div class="numbertext">25 / 45</div>
+                          <figure>
+                            <img src="images/NDWI_2023.png">
+                            <figcaption>Gambar 27. NDWI Pantai Kuta Tahun 2023</figcaption>
+                          </figure>
+                      </div>
+                      <div class="mySlides fade">
+                        <div class="numbertext">26 / 45</div>
+                        <figure>
+                          <img src="images/NRD_2019.png">
+                          <figcaption>Gambar 28. NRD Pantai Kuta Tahun 2019</figcaption>
+                        </figure>
+                      </div>
+                      
+                      <div class="mySlides fade">
+                        <div class="numbertext">27 / 45</div>
+                        <figure>
+                          <img src="images/NRD_2020.png">
+                          <figcaption>Gambar 29. NRD Pantai Kuta Tahun 2020</figcaption>
+                        </figure>
+                      </div>
+                      
+                      <div class="mySlides fade">
+                          <div class="numbertext">28 / 45</div>
+                          <figure>
+                            <img src="images/NRD_2021.png">
+                            <figcaption>Gambar 30. NRD Pantai Kuta Tahun 2021</figcaption>
+                          </figure>
+                        </div>
+                      
+                      <div class="mySlides fade">
+                          <div class="numbertext">29 / 45</div>
+                          <figure>
+                            <img src="images/NRD_2022.png">
+                            <figcaption>Gambar 31. NRD Pantai Kuta Tahun 2022</figcaption>
+                          </figure>
+                      </div>
+  
+                      <div class="mySlides fade">
+                          <div class="numbertext">30 / 45</div>
+                          <figure>
+                            <img src="images/NRD_2023.png">
+                            <figcaption>Gambar 32. NRD Pantai Kuta Tahun 2023</figcaption>
+                          </figure>
+                      </div>
+                      <div class="mySlides fade">
+                        <div class="numbertext">31 / 45</div>
+                        <figure>
+                          <img src="images/NDMI_2019.png">
+                          <figcaption>Gambar 33. NDMI Pantai Kuta Tahun 2019</figcaption>
+                        </figure>
+                      </div>
+                      
+                      <div class="mySlides fade">
+                        <div class="numbertext">32 / 45</div>
+                        <figure>
+                          <img src="images/NDMI_2020.png">
+                          <figcaption>Gambar 34. NDMI Pantai Kuta Tahun 2020</figcaption>
+                        </figure>
+                      </div>
+                      
+                      <div class="mySlides fade">
+                          <div class="numbertext">33 / 45</div>
+                          <figure>
+                            <img src="images/NDMI_2021.png">
+                            <figcaption>Gambar 35. NDMI Pantai Kuta Tahun 2021</figcaption>
+                          </figure>
+                        </div>
+                      
+                      <div class="mySlides fade">
+                          <div class="numbertext">34 / 45</div>
+                          <figure>
+                            <img src="images/NDMI_2022.png">
+                            <figcaption>Gambar 36. NDMI Pantai Kuta Tahun 2022</figcaption>
+                          </figure>
+                      </div>
+  
+                      <div class="mySlides fade">
+                          <div class="numbertext">35 / 45</div>
+                          <figure>
+                            <img src="images/NDMI_2023.png">
+                            <figcaption>Gambar 37. NDMI Pantai Kuta Tahun 2023</figcaption>
+                          </figure>
+                      </div>
+                      <div class="mySlides fade">
+                        <div class="numbertext">36 / 45</div>
+                        <figure>
+                          <img src="images/BSI_2019.png">
+                          <figcaption>Gambar 38. BSI Pantai Kuta Tahun 2019</figcaption>
+                        </figure>
+                      </div>
+                      
+                      <div class="mySlides fade">
+                        <div class="numbertext">37 / 45</div>
+                        <figure>
+                          <img src="images/BSI_2020.png">
+                          <figcaption>Gambar 39. BSI Pantai Kuta Tahun 2020</figcaption>
+                        </figure>
+                      </div>
+                      
+                      <div class="mySlides fade">
+                          <div class="numbertext">38 / 45</div>
+                          <figure>
+                            <img src="images/BSI_2021.png">
+                            <figcaption>Gambar 40. BSI Pantai Kuta Tahun 2021</figcaption>
+                          </figure>
+                        </div>
+                      
+                      <div class="mySlides fade">
+                          <div class="numbertext">39 / 45</div>
+                          <figure>
+                            <img src="images/BSI_2022.png">
+                            <figcaption>Gambar 41. BSI Pantai Kuta Tahun 2022</figcaption>
+                          </figure>
+                      </div>
+  
+                      <div class="mySlides fade">
+                          <div class="numbertext">40 / 45</div>
+                          <figure>
+                            <img src="images/BSI_2023.png">
+                            <figcaption>Gambar 42. BSI Pantai Kuta Tahun 2023</figcaption>
+                          </figure>
+                      </div>
+                      <div class="mySlides fade">
+                        <div class="numbertext">41 / 45</div>
+                        <figure>
+                          <img src="images/API_2019.png">
+                          <figcaption>Gambar 43. API Pantai Kuta Tahun 2019</figcaption>
+                        </figure>
+                      </div>
+                      
+                      <div class="mySlides fade">
+                        <div class="numbertext">42 / 45</div>
+                        <figure>
+                          <img src="images/API_2020.png">
+                          <figcaption>Gambar 44. API Pantai Kuta Tahun 2020</figcaption>
+                        </figure>
+                      </div>
+                      
+                      <div class="mySlides fade">
+                          <div class="numbertext">43 / 45</div>
+                          <figure>
+                            <img src="images/API_2021.png">
+                            <figcaption>Gambar 45. API Pantai Kuta Tahun 2021</figcaption>
+                          </figure>
+                        </div>
+                      
+                      <div class="mySlides fade">
+                          <div class="numbertext">44 / 45</div>
+                          <figure>
+                            <img src="images/API_2022.png">
+                            <figcaption>Gambar 46. API Pantai Kuta Tahun 2022</figcaption>
+                          </figure>
+                      </div>
+  
+                      <div class="mySlides fade">
+                          <div class="numbertext">45 / 45</div>
+                          <figure>
+                            <img src="images/API_2023.png">
+                            <figcaption>Gambar 47. API Pantai Kuta Tahun 2023</figcaption>
+                          </figure>
+                      </div>
+                    <a class="prev" onclick="plusSlides(-1)">❮</a>
+                    <a class="next" onclick="plusSlides(1)">❯</a>
+                    
+                </div> <!--end slideshow-->
+                <br>
+                    
+                <!-- <div style="text-align:center">
+                    <span class="dot" onclick="currentSlide(1)"></span> 
+                    <span class="dot" onclick="currentSlide(2)"></span> 
+                    <span class="dot" onclick="currentSlide(3)"></span> 
+                    <span class="dot" onclick="currentSlide(4)"></span> 
+                    <span class="dot" onclick="currentSlide(5)"></span> 
+                </div> -->
+                <h2>Pembangunan Model</h2>
+                <p>
+                    Penelitian ini menggunakan tiga algoritma machine learning yaitu <i>Random Forest</i>, <i>Extreme Gradient-Boosting</i> (XGBoost), dan <i>Light Gradient-Boosting Machine</i> (LightGBM). Tabel 1 menunjukkan performa yang dihasilkan dari masing-masing model. Model yang digunakan dalam mendeteksi sampah plastik di Pantai Kuta adalah model dengan performa terbaik, yakni <i>Random Forest</i> dengan F1-<i>score</i> sebesar 93,68%. Dalam membangun model, dataset dibagi ke dalam <i>training set</i> dan <i>testing set</i> dengan perbandingan 80:20. Pencarian nilai <i>hyperparameter</i> optimal dilakukan dengan <i>Bayesian Search</i> menggunakan 10-<i>fold cross-validation</i>.
+                </p>
+                <table>
+                  <caption>Tabel 1. Performa Model</caption>
+                  <tr>
+                      <th rowspan="2">Model</th>
+                      <th colspan="4">Metrik Evaluasi (%)</th>
+                  </tr>
+                  <tr>
+                      <th>Akurasi</th>
+                      <th>Presisi</th>
+                      <th><i>Recall</i></th>
+                      <th>F1-<i>score</i></th>
+                  </tr>
+                  <tr>
+                    <td>(1)</td>
+                    <td>(2)</td>
+                    <td>(3)</td>
+                    <td>(4)</td>
+                    <td>(5)</td>
+                  </tr>
+                  <tr>
+                      <td style="text-align: left;"><b>Random Forest</b></td>
+                      <td><b>0,9901</b></td>
+                      <td><b>0,9507</b></td>
+                      <td><b>0,9246</b></td>
+                      <td><b>0,9368</b></td>
+                  </tr>
+                  <tr>
+                      <td style="text-align: left;">XGBoost</td>
+                      <td>0,9847</td>
+                      <td>0,9321</td>
+                      <td>0,8998</td>
+                      <td>0,9149</td>
+                  </tr>
+                  <tr>
+                      <td style="text-align: left;">LightGBM</td>
+                      <td>0,9086</td>
+                      <td>0,7645</td>
+                      <td>0,7074</td>
+                      <td>0,7240</td>
+                  </tr>
+                </table>
+                <h2>Visualisasi Hasil Deteksi Sampah Plastik di Pantai Kuta Tahun 2019-2023</h2>
+                <p>Berdasarkan model terbaik yaitu <i>Random Forest</i>, dilakukan prediksi sampah plastik di area Pantai Kuta pada tahun 2019-2023. Gambar 48 - Gambar 52 menunjukkan visualisasi hasil deteksi sampah plastik di Pantai Kuta pada tahun 2019-2023.</p>
+                <div class="slideshow-container2">
+
+                    <div class="mySlides2 fade">
+                      <div class="numbertext">1 / 5</div>
+                      <figure>
+                        <img src="images/Visualisasi_single_S2_2019_KUTA.png">
+                        <figcaption>Gambar 48. Hasil Deteksi Sampah Plastik di Pantai Kuta Tahun 2019</figcaption>
+                      </figure>
+                    </div>
+                    <div class="mySlides2 fade">
+                        <div class="numbertext">2 / 5</div>
+                        <figure>
+                          <img src="images/Visualisasi_single_S2_2020_KUTA.png">
+                          <figcaption>Gambar 49. Hasil Deteksi Sampah Plastik di Pantai Kuta Tahun 2020</figcaption>
+                        </figure>
+                      </div>
+                      <div class="mySlides2 fade">
+                        <div class="numbertext">3 / 5</div>
+                        <figure>
+                          <img src="images/Visualisasi_single_S2_2021_KUTA.png">
+                          <figcaption>Gambar 50. Hasil Deteksi Sampah Plastik di Pantai Kuta Tahun 2021</figcaption>
+                        </figure>
+                      </div>
+                      <div class="mySlides2 fade">
+                        <div class="numbertext">4 / 5</div>
+                        <figure>
+                          <img src="images/Visualisasi_single_S2_2022_KUTA.png">
+                          <figcaption>Gambar 51. Hasil Deteksi Sampah Plastik di Pantai Kuta Tahun 2022</figcaption>
+                        </figure>
+                      </div>
+                      <div class="mySlides2 fade">
+                        <div class="numbertext">5 / 5</div>
+                        <figure>
+                          <img src="images/Visualisasi_single_S2_2023_KUTA.png">
+                          <figcaption>Gambar 52. Hasil Deteksi Sampah Plastik di Pantai Kuta Tahun 2023</figcaption>
+                        </figure>
+                      </div>
+                    <a class="prev2" onclick="plusSlides2(-1)">❮</a>
+                    <a class="next2" onclick="plusSlides2(1)">❯</a>
+                </div> <!--end slideshow-->
+                <p>Berdasarkan hasil visualisasi, terlihat bahwa hasil prediksi setiap tahunnya didominasi oleh objek-objek alam. Pada tahun 2019-2023, kelas yang paling banyak terdeteksi oleh model adalah kelas perairan, yaitu <i>Shallow Water</i>, <i>Marine Water</i>, dan <i>Turbid Water</i>. Meskipun hasil prediksi didominasi oleh fitur alam, model mampu mendeteksi keberadaan sampah plastik di area Pantai Kuta. Tabel 2 menunjukkan jumlah piksel hasil prediksi Pantai Kuta pada masing-masing kelas.</p>
+                <table>
+                  <caption>Tabel 2. Jumlah Piksel Hasil Prediksi Berdasarkan Kelas dan Tahun</caption>
+                  <tr>
+                      <th rowspan="2">Kelas</th>
+                      <th colspan="5">Tahun</th>
+                  </tr>
+                  <tr>
+                      <th>2019</th>
+                      <th>2020</th>
+                      <th>2021</th>
+                      <th>2022</th>
+                      <th>2023</th>
+                  </tr>
+                  <tr>
+                    <td>(1)</td>
+                    <td>(2)</td>
+                    <td>(3)</td>
+                    <td>(4)</td>
+                    <td>(5)</td>
+                    <td>(6)</td>
+                  </tr>
+                  <tr>
+                      <td class="italic">Marine Debris</td>
+                      <td>8</td>
+                      <td>4</td>
+                      <td>8</td>
+                      <td>7</td>
+                      <td>6</td>
+                  </tr>
+                  <tr>
+                      <td class="italic">Dense Sargassum</td>
+                      <td>2</td>
+                      <td>0</td>
+                      <td>9</td>
+                      <td>21</td>
+                      <td>0</td>
+                  </tr>
+                  <tr>
+                      <td class="italic">Sparse Sargassum</td>
+                      <td>0</td>
+                      <td>0</td>
+                      <td>0</td>
+                      <td>5</td>
+                      <td>0</td>
+                  </tr>
+                  <tr>
+                      <td class="italic">Natural Organic Material</td>
+                      <td>1050</td>
+                      <td>2106</td>
+                      <td>1520</td>
+                      <td>2690</td>
+                      <td>1141</td>
+                  </tr>
+                  <tr>
+                      <td class="italic">Ship</td>
+                      <td>4387</td>
+                      <td>3272</td>
+                      <td>3229</td>
+                      <td>3519</td>
+                      <td>3844</td>
+                  </tr>
+                  <tr>
+                      <td class="italic">Clouds</td>
+                      <td>7586</td>
+                      <td>10612</td>
+                      <td>16498</td>
+                      <td>4674</td>
+                      <td>11743</td>
+                  </tr>
+                  <tr>
+                      <td class="italic">Marine Water</td>
+                      <td>10715</td>
+                      <td>12537</td>
+                      <td>14459</td>
+                      <td>7127</td>
+                      <td>14886</td>
+                  </tr>
+                  <tr>
+                      <td class="italic">Sediment-Laden Water</td>
+                      <td>40</td>
+                      <td>101</td>
+                      <td>30</td>
+                      <td>33</td>
+                      <td>131</td>
+                  </tr>
+                  <tr>
+                      <td class="italic">Foam</td>
+                      <td>1212</td>
+                      <td>1362</td>
+                      <td>355</td>
+                      <td>550</td>
+                      <td>790</td>
+                  </tr>
+                  <tr>
+                      <td class="italic">Turbid Water</td>
+                      <td>8142</td>
+                      <td>10097</td>
+                      <td>10291</td>
+                      <td>5499</td>
+                      <td>11010</td>
+                  </tr>
+                  <tr>
+                      <td class="italic">Shallow Water</td>
+                      <td>32922</td>
+                      <td>25973</td>
+                      <td>19665</td>
+                      <td>41939</td>
+                      <td>22513</td>
+                  </tr>
+                </table>
+                <p>Terdapat sebanyak 8 piksel yang terdeteksi sebagai sampah plastik di Pantai Kuta pada tahun 2019. Hal ini berarti pada tahun 2019 terdapat sekitar 800 m<sup>2</sup> area Pantai Kuta yang tercemari oleh sampah plastik. Pada tahun 2020, terjadi penurunan yang cukup signifikan pada jumlah piksel sampah plastik yang terdeteksi, yaitu menjadi 4 piksel atau 400m<sup>2</sup>. Penurunan jumlah sampah yang terdeteksi pada tahun 2020 sejalan dengan adanya kebijakan terkait pemberlakuan Pembatasan Sosial Berskala Besar (PSBB) pada masa pandemi covid-19. Kebijakan PSBB tersebut menurunkan aktivitas pariwisata di Pantai Kuta sehingga dapat menyebabkan berkurangnya jumlah sampah yang berasal dari aktivitas pariwisata. Pada tahun 2021, jumlah piksel sampah plastik di Pantai Kuta yang terdeteksi kembali meningkat menjadi 8 piksel atau 800 m<sup>2</sup>. Peningkatan jumlah piksel sampah yang terdeteksi dari tahun 2020 ke 2021 dapat disebabkan oleh pulihnya aktivitas masyarakat di area Pantai Kuta. Pada tahun 2022 dan 2023 secara berturut-turut terjadi penurunan jumlah piksel sampah plastik yang terdeteksi, yakni masing-masing 7 piksel dan 6 piksel. </p>
+            </div> <!---END CONTAINER ISI-->
+        </div> <!---END CONTAINER 2-->
+        <script>
+            let slideIndex = 1;
+            showSlides(slideIndex);
+            
+            function plusSlides(n) {
+              showSlides(slideIndex += n);
+            }
+            
+            function currentSlide(n) {
+              showSlides(slideIndex = n);
+            }
+            
+            function showSlides(n) {
+              let i;
+              let slides = document.getElementsByClassName("mySlides");
+              let dots = document.getElementsByClassName("dot");
+              if (n > slides.length) {slideIndex = 1}    
+              if (n < 1) {slideIndex = slides.length}
+              for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+              }
+              for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+              }
+              slides[slideIndex-1].style.display = "block";  
+              dots[slideIndex-1].className += " active";
+            }
+        </script>
+        <script>
+            let slideIndex2 = 1;
+            showSlides2(slideIndex);
+            
+            function plusSlides2(n) {
+              showSlides2(slideIndex += n);
+            }
+            
+            function currentSlide2(n) {
+              showSlides2(slideIndex = n);
+            }
+            
+            function showSlides2(n) {
+              let i;
+              let slides = document.getElementsByClassName("mySlides2");
+              let dots = document.getElementsByClassName("dot");
+              if (n > slides.length) {slideIndex = 1}    
+              if (n < 1) {slideIndex = slides.length}
+              for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+              }
+              for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+              }
+              slides[slideIndex-1].style.display = "block";  
+              dots[slideIndex-1].className += " active";
+            }
+        </script>
+	</body>
+</html>
