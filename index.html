@@ -67,7 +67,7 @@
             </div>
 			<div class="cont12">
                 <p>
-                    Pencemaran sampah plastik pada ekosistem laut saat ini masih menjadi permasalahan global. Permasalahan terkait pencemaran laut menjadi salah satu tujuan global yang disepakati oleh Perserikatan Bangsa-Bangsa (PBB) yang dikenal dengan <i>Sustainable Development Goals</i> (SDGs). Salah satu target dari tujuan ke-14 SDGs adalah mencegah dan mengurangi berbagai pencemaran laut, termasuk sampah laut. Pencemaran laut menjadi hal yang krusial karena dapat berdampak pada berbagai aspek, seperti mengurangi hasil tangkapan nelayan, merusak ekosistem laut, serta menurunkan daya Tarik wisata. Oleh karena itu, <i>dashboard</i> ini dibangun untuk mempermudah pemerintah ataupun pihak yang berwenang dalam proses analisis, pemantauan, serta mitigasi pencemaran sampah plastik di wilayah Pantai Kuta tahun 2019-2023.
+                    Pencemaran sampah plastik pada ekosistem laut saat ini masih menjadi permasalahan global. Permasalahan terkait pencemaran laut menjadi salah satu tujuan global yang disepakati oleh Perserikatan Bangsa-Bangsa (PBB) yang dikenal dengan <i>Sustainable Development Goals</i> (SDGs). Salah satu target dari tujuan ke-14 SDGs adalah mencegah dan mengurangi berbagai pencemaran laut, termasuk sampah laut. Pencemaran laut menjadi hal yang krusial karena dapat berdampak pada berbagai aspek, seperti mengurangi hasil tangkapan nelayan, merusak ekosistem laut, serta menurunkan daya tarik wisata. Oleh karena itu, <i>dashboard</i> ini dibangun untuk mempermudah pemerintah ataupun pihak yang berwenang dalam proses analisis, pemantauan, serta mitigasi pencemaran sampah plastik di wilayah Pantai Kuta tahun 2019-2023.
                 </p>
             </div>
 		</div>
@@ -76,7 +76,7 @@
             <div class="container-isi">
                 <h2>Permasalahan Pencemaran Sampah Plastik di Lautan</h2>
                 <p>
-                    Pantai Kuta sebagai salah satu destinasi wisata terpopuler di Bali ternyata masih menghadapi tantangan terkait pencemaran laut. Menurut Kementerian Lingkungan Hidup dan Kehutanan (KLHK), tercatat bahwa terdapat sekitar 30 ton sampah perhari yang mencemari Pantai Kuta akibat fenomena sampah kiriman yang bersumber dari sampah rumah tangga. Hasil pemantauan sampah laut oleh KLHK yang ditunjukkan pada Gambar 1 menunjukkan bahwa jenis sampah yang paling mendominasi adalah sampah plastik. Permasalahan ini menjadi salah satu tujuan global ke-14 dalam SDGs yang diharapkan dapat segera teratasi.
+                    Pantai Kuta sebagai salah satu destinasi wisata terpopuler di Bali ternyata masih menghadapi tantangan terkait pencemaran laut. Kementerian Lingkungan Hidup dan Kehutanan (KLHK) mencatat bahwa terdapat sekitar 30 ton sampah perhari yang mencemari Pantai Kuta akibat fenomena sampah kiriman yang bersumber dari sampah rumah tangga. Pemantauan sampah laut yang dilakukan oleh KLHK pada tahun 2021 menunjukkan bahwa terdapat 12,82 gram sampah plastik per meter persegi di pantai di Kabupaten Badung. Berdasarkan data tersebut, sampah plastik menjadi jenis sampah laut yang paling mendominasi seperti yang ditunjukkan pada Gambar 1. Selain itu, hasil pemantauan sampah laut KLHK pada tahun 2023 menunjukkan bahwa Kabupaten Badung, Bali, menjadi titik lokasi dengan kelimpahan mikroplastik di air laut tertinggi, yakni mencapai 91,22 partikel/m<sup>3</sup>. Hal ini menunjukkan bahwa permasalahan sampah plastik di pantai Kabupaten Badung masih menjadi sebuah tantangan.  
                 </p>
                 <figure>
                     <img src="images/sampah-kuta.png" alt="gambar-sampah">
@@ -483,48 +483,77 @@
                 </div> -->
                 <h2>Pembangunan Model</h2>
                 <p>
-                    Penelitian ini menggunakan tiga algoritma machine learning yaitu <i>Random Forest</i>, <i>Extreme Gradient-Boosting</i> (XGBoost), dan <i>Light Gradient-Boosting Machine</i> (LightGBM). Tabel 1 menunjukkan performa yang dihasilkan dari masing-masing model. Model yang digunakan dalam mendeteksi sampah plastik di Pantai Kuta adalah model dengan performa terbaik, yakni <i>Random Forest</i> dengan F1-<i>score</i> sebesar 93,68%. Dalam membangun model, dataset dibagi ke dalam <i>training set</i> dan <i>testing set</i> dengan perbandingan 80:20. Pencarian nilai <i>hyperparameter</i> optimal dilakukan dengan <i>Bayesian Search</i> menggunakan 10-<i>fold cross-validation</i>.
+                    Penelitian ini menggunakan tiga algoritma machine learning yaitu <i>Random Forest</i>, <i>Extreme Gradient-Boosting</i> (XGBoost), dan <i>Light Gradient-Boosting Machine</i> (LightGBM). Tabel 1 menunjukkan performa yang dihasilkan dari masing-masing model. Model yang digunakan dalam mendeteksi sampah plastik di Pantai Kuta adalah model dengan performa terbaik, yakni LightGBM dengan F1-<i>score</i> sebesar 95,16%. Dalam membangun model, dataset dibagi ke dalam <i>training set</i> dan <i>testing set</i> dengan perbandingan 80:20. Pencarian nilai <i>hyperparameter</i> optimal dilakukan dengan <i>Bayesian optimization</i> menggunakan 5-<i>fold cross-validation</i>.
                 </p>
-                <table>
-                  <caption>Tabel 1. Performa Model</caption>
-                  <tr>
+                <table class="table1">
+                  <caption>Tabel 1. Performa Model Pada Data <i>Training</i> dan Data <i>Testing</i> </caption>
+                  <thead>
+                    <tr>
+                      <th rowspan="2">Data</th>
                       <th rowspan="2">Model</th>
                       <th colspan="4">Metrik Evaluasi (%)</th>
-                  </tr>
-                  <tr>
+                    </tr>
+                    <tr>
                       <th>Akurasi</th>
                       <th>Presisi</th>
                       <th><i>Recall</i></th>
-                      <th>F1-<i>score</i></th>
-                  </tr>
-                  <tr>
-                    <td>(1)</td>
-                    <td>(2)</td>
-                    <td>(3)</td>
-                    <td>(4)</td>
-                    <td>(5)</td>
-                  </tr>
-                  <tr>
-                      <td style="text-align: left;"><b>Random Forest</b></td>
-                      <td><b>0,9901</b></td>
-                      <td><b>0,9507</b></td>
-                      <td><b>0,9246</b></td>
-                      <td><b>0,9368</b></td>
-                  </tr>
-                  <tr>
-                      <td style="text-align: left;">XGBoost</td>
-                      <td>0,9847</td>
-                      <td>0,9321</td>
-                      <td>0,8998</td>
-                      <td>0,9149</td>
-                  </tr>
-                  <tr>
-                      <td style="text-align: left;">LightGBM</td>
-                      <td>0,9086</td>
-                      <td>0,7645</td>
-                      <td>0,7074</td>
-                      <td>0,7240</td>
-                  </tr>
+                      <th>F1-<i>Score</i></th>
+                    </tr>
+                    <tr>
+                      <td>(1)</td>
+                      <td>(2)</td>
+                      <td>(3)</td>
+                      <td>(4)</td>
+                      <td>(5)</td>
+                      <td>(6)</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td rowspan="3"><i>Training</i></td>
+                      <td><i>Random Forest</i></td>
+                      <td>99,74</td>
+                      <td>97,65</td>
+                      <td>99,68</td>
+                      <td>98,61</td>
+                    </tr>
+                    <tr>
+                      <td>XGBoost</td>
+                      <td>98,76</td>
+                      <td>95,28</td>
+                      <td>92,10</td>
+                      <td>93,58</td>
+                    </tr>
+                    <tr>
+                      <td><strong>LightGBM</strong></td>
+                      <td><strong>99,77</strong></td>
+                      <td><strong>99,58</strong></td>
+                      <td><strong>99,87</strong></td>
+                      <td><strong>99,72</strong></td>
+                    </tr>
+                    <tr>
+                      <td rowspan="3"><i>Testing</i></td>
+                      <td><i>Random Forest</i></td>
+                      <td>98,92</td>
+                      <td>92,67</td>
+                      <td>93,89</td>
+                      <td>93,19</td>
+                    </tr>
+                    <tr>
+                      <td>XGBoost</td>
+                      <td>98,47</td>
+                      <td>93,21</td>
+                      <td>89,98</td>
+                      <td>91,49</td>
+                    </tr>
+                    <tr>
+                      <td><strong>LightGBM</strong></td>
+                      <td><strong>99,18</strong></td>
+                      <td><strong>94,82</strong></td>
+                      <td><strong>95,53</strong></td>
+                      <td><strong>95,16</strong></td>
+                    </tr>
+                  </tbody>
                 </table>
                 <h2>Visualisasi Hasil Deteksi Sampah Plastik di Pantai Kuta Tahun 2019-2023</h2>
                 <p>Berdasarkan model terbaik yaitu <i>Random Forest</i>, dilakukan prediksi sampah plastik di area Pantai Kuta pada tahun 2019-2023. Gambar 4 menunjukkan visualisasi hasil deteksi sampah plastik di Pantai Kuta pada tahun 2019-2023.</p>
@@ -569,117 +598,121 @@
                     <a class="next2" onclick="plusSlides2(1)">❯</a>
                 </div> <!--end slideshow-->
                 <p>Berdasarkan hasil visualisasi, terlihat bahwa hasil prediksi setiap tahunnya didominasi oleh objek-objek alam. Pada tahun 2019-2023, kelas yang paling banyak terdeteksi oleh model adalah kelas perairan, yaitu <i>Shallow Water</i>, <i>Marine Water</i>, dan <i>Turbid Water</i>. Meskipun hasil prediksi didominasi oleh fitur alam, model mampu mendeteksi keberadaan sampah plastik di area Pantai Kuta. Tabel 2 menunjukkan jumlah piksel hasil prediksi Pantai Kuta pada masing-masing kelas.</p>
-                <table>
+                <table class="table1">
                   <caption>Tabel 2. Jumlah Piksel Hasil Prediksi Berdasarkan Kelas dan Tahun</caption>
+                  <thead>
                   <tr>
-                      <th rowspan="2">Kelas</th>
-                      <th colspan="5">Tahun</th>
+                    <th rowspan="2">Kelas</th>
+                    <th colspan="5">Tahun</th>
                   </tr>
                   <tr>
-                      <th>2019</th>
-                      <th>2020</th>
-                      <th>2021</th>
-                      <th>2022</th>
-                      <th>2023</th>
+                    <th>2019</th>
+                    <th>2020</th>
+                    <th>2021</th>
+                    <th>2022</th>
+                    <th>2023</th>
                   </tr>
                   <tr>
-                    <td>(1)</td>
-                    <td>(2)</td>
-                    <td>(3)</td>
-                    <td>(4)</td>
-                    <td>(5)</td>
-                    <td>(6)</td>
+                    <th>(1)</th>
+                    <th>(2)</th>
+                    <th>(3)</th>
+                    <th>(4)</th>
+                    <th>(5)</th>
+                    <th>(6)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Clouds</td>
+                    <td>6704</td>
+                    <td>8865</td>
+                    <td>15717</td>
+                    <td>3480</td>
+                    <td>10594</td>
                   </tr>
                   <tr>
-                      <td class="italic">Marine Debris</td>
-                      <td>8</td>
-                      <td>4</td>
-                      <td>8</td>
-                      <td>7</td>
-                      <td>6</td>
+                    <td>Dense Sargassum</td>
+                    <td>658</td>
+                    <td>1060</td>
+                    <td>692</td>
+                    <td>1292</td>
+                    <td>641</td>
                   </tr>
                   <tr>
-                      <td class="italic">Dense Sargassum</td>
-                      <td>2</td>
-                      <td>0</td>
-                      <td>9</td>
-                      <td>21</td>
-                      <td>0</td>
+                    <td>Foam</td>
+                    <td>1155</td>
+                    <td>1345</td>
+                    <td>381</td>
+                    <td>560</td>
+                    <td>776</td>
                   </tr>
                   <tr>
-                      <td class="italic">Sparse Sargassum</td>
-                      <td>0</td>
-                      <td>0</td>
-                      <td>0</td>
-                      <td>5</td>
-                      <td>0</td>
+                    <td><strong>Marine Debris</strong></td>
+                    <td><strong>5</strong></td>
+                    <td><strong>0</strong></td>
+                    <td><strong>1</strong></td>
+                    <td><strong>3</strong></td>
+                    <td><strong>4</strong></td>
                   </tr>
                   <tr>
-                      <td class="italic">Natural Organic Material</td>
-                      <td>1050</td>
-                      <td>2106</td>
-                      <td>1520</td>
-                      <td>2690</td>
-                      <td>1141</td>
+                    <td>Marine Water</td>
+                    <td>3084</td>
+                    <td>7094</td>
+                    <td>9256</td>
+                    <td>4519</td>
+                    <td>8171</td>
                   </tr>
                   <tr>
-                      <td class="italic">Ship</td>
-                      <td>4387</td>
-                      <td>3272</td>
-                      <td>3229</td>
-                      <td>3519</td>
-                      <td>3844</td>
+                    <td>Natural Organic Material</td>
+                    <td>328</td>
+                    <td>866</td>
+                    <td>1134</td>
+                    <td>1890</td>
+                    <td>341</td>
                   </tr>
                   <tr>
-                      <td class="italic">Clouds</td>
-                      <td>7586</td>
-                      <td>10612</td>
-                      <td>16498</td>
-                      <td>4674</td>
-                      <td>11743</td>
+                    <td>Sediment-Laden Water</td>
+                    <td>49</td>
+                    <td>92</td>
+                    <td>9</td>
+                    <td>34</td>
+                    <td>56</td>
                   </tr>
                   <tr>
-                      <td class="italic">Marine Water</td>
-                      <td>10715</td>
-                      <td>12537</td>
-                      <td>14459</td>
-                      <td>7127</td>
-                      <td>14886</td>
+                    <td>Shallow Water</td>
+                    <td>43952</td>
+                    <td>39982</td>
+                    <td>28134</td>
+                    <td>46626</td>
+                    <td>31401</td>
                   </tr>
                   <tr>
-                      <td class="italic">Sediment-Laden Water</td>
-                      <td>40</td>
-                      <td>101</td>
-                      <td>30</td>
-                      <td>33</td>
-                      <td>131</td>
+                    <td>Ship</td>
+                    <td>5529</td>
+                    <td>4734</td>
+                    <td>3637</td>
+                    <td>4156</td>
+                    <td>5432</td>
                   </tr>
                   <tr>
-                      <td class="italic">Foam</td>
-                      <td>1212</td>
-                      <td>1362</td>
-                      <td>355</td>
-                      <td>550</td>
-                      <td>790</td>
+                    <td>Sparse Sargassum</td>
+                    <td>1</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>11</td>
+                    <td>0</td>
                   </tr>
                   <tr>
-                      <td class="italic">Turbid Water</td>
-                      <td>8142</td>
-                      <td>10097</td>
-                      <td>10291</td>
-                      <td>5499</td>
-                      <td>11010</td>
+                    <td>Turbid Water</td>
+                    <td>4599</td>
+                    <td>2026</td>
+                    <td>7102</td>
+                    <td>3493</td>
+                    <td>8648</td>
                   </tr>
-                  <tr>
-                      <td class="italic">Shallow Water</td>
-                      <td>32922</td>
-                      <td>25973</td>
-                      <td>19665</td>
-                      <td>41939</td>
-                      <td>22513</td>
-                  </tr>
+                </tbody>
                 </table>
-                <p>Terdapat sebanyak 8 piksel yang terdeteksi sebagai sampah plastik di Pantai Kuta pada tahun 2019. Hal ini berarti pada tahun 2019 terdapat sekitar 800 m<sup>2</sup> area Pantai Kuta yang tercemari oleh sampah plastik. Pada tahun 2020, terjadi penurunan yang cukup signifikan pada jumlah piksel sampah plastik yang terdeteksi, yaitu menjadi 4 piksel atau 400m<sup>2</sup>. Penurunan jumlah sampah yang terdeteksi pada tahun 2020 sejalan dengan adanya kebijakan terkait pemberlakuan Pembatasan Sosial Berskala Besar (PSBB) pada masa pandemi covid-19. Kebijakan PSBB tersebut menurunkan aktivitas pariwisata di Pantai Kuta sehingga dapat menyebabkan berkurangnya jumlah sampah yang berasal dari aktivitas pariwisata. Pada tahun 2021, jumlah piksel sampah plastik di Pantai Kuta yang terdeteksi kembali meningkat menjadi 8 piksel atau 800 m<sup>2</sup>. Peningkatan jumlah piksel sampah yang terdeteksi dari tahun 2020 ke 2021 dapat disebabkan oleh pulihnya aktivitas masyarakat di area Pantai Kuta. Pada tahun 2022 dan 2023 secara berturut-turut terjadi penurunan jumlah piksel sampah plastik yang terdeteksi, yakni masing-masing 7 piksel dan 6 piksel. </p>
+                <p>Terdapat sebanyak 5 piksel yang terdeteksi sebagai sampah plastik di Pantai Kuta pada tahun 2019. Hal ini berarti pada tahun 2019 terdapat sekitar 500 m<sup>2</sup> area Pantai Kuta yang tercemari oleh sampah plastik. Pada tahun 2020, model tidak mendeteksi keberadaan piksel yang diprediksi sebagai sampah plastik di Pantai Kuta. Hal ini sejalan dengan adanya kebijakan terkait pemberlakuan Pembatasan Sosial Berskala Besar (PSBB) pada masa pandemi covid-19. Kebijakan PSBB tersebut menurunkan aktivitas pariwisata di Pantai Kuta sehingga dapat menyebabkan berkurangnya jumlah sampah yang berasal dari aktivitas pariwisata. Pada tahun 2021, jumlah piksel sampah plastik di Pantai Kuta yang terdeteksi kembali meningkat menjadi 1 piksel atau 100 m<sup>2</sup>. Peningkatan jumlah piksel sampah yang terdeteksi dari tahun 2020 ke 2021 dapat disebabkan oleh pulihnya aktivitas masyarakat di area Pantai Kuta. Pada tahun 2022 dan 2023 secara berturut-turut terjadi peningkatan jumlah piksel sampah plastik yang terdeteksi, yakni masing-masing 3 piksel dan 4 piksel.   </p>
             </div> <!---END CONTAINER ISI-->
         </div> <!---END CONTAINER 2-->
         <script>

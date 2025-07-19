@@ -75,7 +75,6 @@
         <script src="js/rbush.min.js"></script>
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
-        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
         <script src="js/tailDT.js"></script>
 <script src="js/nouislider.min.js"></script>
 <script src="js/wNumb.js"></script>
@@ -104,7 +103,7 @@
         }
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
-        }).fitBounds([[-8.728971323416173,115.14180693671186],[-8.703855539004381,115.18633468895146]]);
+        }).fitBounds([[-8.731156645066948,115.15584082933945],[-8.718866966914264,115.17553367538956]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -152,12 +151,14 @@
             return {
                 pane: 'pane_WilayahStudi_1',
                 opacity: 1,
-                color: 'rgba(60,243,19,1.0)',
+                color: 'rgba(35,255,35,1.0)',
                 dashArray: '10,5',
-                lineCap: 'round',
-                lineJoin: 'round',
-                weight: 1,
-                fillOpacity: 0,
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(141,90,153,0.0)',
                 interactive: false,
             }
         }
@@ -193,40 +194,56 @@
             });
             var popupContent = '<table>\
                     <tr>\
-                        <th scope="row">Class</th>\
-                        <td>' + (feature.properties['Class'] !== null ? autolinker.link(feature.properties['Class'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">Year</th>\
+                        <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">id</th>\
-                        <td>' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">Longitude</th>\
+                        <td>' + (feature.properties['Longitude'] !== null ? autolinker.link(feature.properties['Longitude'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Latitude</th>\
+                        <td>' + (feature.properties['Latitude'] !== null ? autolinker.link(feature.properties['Latitude'].toFixed(6)) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">Label</th>\
                         <td>' + (feature.properties['Label'] !== null ? autolinker.link(feature.properties['Label'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Year</th>\
-                        <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Latitude</th>\
-                        <td>' + (feature.properties['Latitude'] !== null ? autolinker.link(feature.properties['Latitude'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Longitude</th>\
-                        <td>' + (feature.properties['Longitude'] !== null ? autolinker.link(feature.properties['Longitude'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">NDVI</th>\
-                        <td>' + (feature.properties['NDVI'] !== null ? autolinker.link(feature.properties['NDVI'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">FDI</th>\
-                        <td>' + (feature.properties['FDI'] !== null ? autolinker.link(feature.properties['FDI'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">NDWI</th>\
+                        <td>' + (feature.properties['NDWI'] !== null ? autolinker.link(feature.properties['NDWI'].toFixed(6)) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">NRD</th>\
-                        <td>' + (feature.properties['NRD'] !== null ? autolinker.link(feature.properties['NRD'].toLocaleString()) : '') + '</td>\
+                        <td>' + (feature.properties['NRD'] !== null ? autolinker.link(feature.properties['NRD'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NDMI</th>\
+                        <td>' + (feature.properties['NDMI'] !== null ? autolinker.link(feature.properties['NDMI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FAI</th>\
+                        <td>' + (feature.properties['FAI'] !== null ? autolinker.link(feature.properties['FAI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">BSI</th>\
+                        <td>' + (feature.properties['BSI'] !== null ? autolinker.link(feature.properties['BSI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FDI</th>\
+                        <td>' + (feature.properties['FDI'] !== null ? autolinker.link(feature.properties['FDI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NDVI</th>\
+                        <td>' + (feature.properties['NDVI'] !== null ? autolinker.link(feature.properties['NDVI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">API</th>\
+                        <td>' + (feature.properties['API'] !== null ? autolinker.link(feature.properties['API'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SI</th>\
+                        <td>' + (feature.properties['SI'] !== null ? autolinker.link(feature.properties['SI'].toFixed(6)) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
@@ -238,7 +255,7 @@
                 stroke: false, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(255,0,0,1.0)',
+                fillColor: 'rgba(255,0,4,1.0)',
                 interactive: true,
             }
         }
@@ -278,36 +295,8 @@
                         <td>' + (feature.properties['Class'] !== null ? autolinker.link(feature.properties['Class'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">id</th>\
-                        <td>' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Label</th>\
-                        <td>' + (feature.properties['Label'] !== null ? autolinker.link(feature.properties['Label'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
                         <th scope="row">Year</th>\
                         <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">NDVI</th>\
-                        <td>' + (feature.properties['NDVI'] !== null ? autolinker.link(feature.properties['NDVI'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">FDI</th>\
-                        <td>' + (feature.properties['FDI'] !== null ? autolinker.link(feature.properties['FDI'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">NRD</th>\
-                        <td>' + (feature.properties['NRD'] !== null ? autolinker.link(feature.properties['NRD'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Latitude</th>\
-                        <td>' + (feature.properties['Latitude'] !== null ? autolinker.link(feature.properties['Latitude'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Longitude</th>\
-                        <td>' + (feature.properties['Longitude'] !== null ? autolinker.link(feature.properties['Longitude'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
@@ -319,7 +308,7 @@
                 stroke: false, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(255,0,0,1.0)',
+                fillColor: 'rgba(255,0,4,1.0)',
                 interactive: true,
             }
         }
@@ -355,40 +344,56 @@
             });
             var popupContent = '<table>\
                     <tr>\
-                        <th scope="row">Class</th>\
-                        <td>' + (feature.properties['Class'] !== null ? autolinker.link(feature.properties['Class'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">Year</th>\
+                        <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">id</th>\
-                        <td>' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">Longitude</th>\
+                        <td>' + (feature.properties['Longitude'] !== null ? autolinker.link(feature.properties['Longitude'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Latitude</th>\
+                        <td>' + (feature.properties['Latitude'] !== null ? autolinker.link(feature.properties['Latitude'].toFixed(6)) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">Label</th>\
                         <td>' + (feature.properties['Label'] !== null ? autolinker.link(feature.properties['Label'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Year</th>\
-                        <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Latitude</th>\
-                        <td>' + (feature.properties['Latitude'] !== null ? autolinker.link(feature.properties['Latitude'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Longitude</th>\
-                        <td>' + (feature.properties['Longitude'] !== null ? autolinker.link(feature.properties['Longitude'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">NDVI</th>\
-                        <td>' + (feature.properties['NDVI'] !== null ? autolinker.link(feature.properties['NDVI'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">FDI</th>\
-                        <td>' + (feature.properties['FDI'] !== null ? autolinker.link(feature.properties['FDI'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">NDWI</th>\
+                        <td>' + (feature.properties['NDWI'] !== null ? autolinker.link(feature.properties['NDWI'].toFixed(6)) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">NRD</th>\
-                        <td>' + (feature.properties['NRD'] !== null ? autolinker.link(feature.properties['NRD'].toLocaleString()) : '') + '</td>\
+                        <td>' + (feature.properties['NRD'] !== null ? autolinker.link(feature.properties['NRD'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NDMI</th>\
+                        <td>' + (feature.properties['NDMI'] !== null ? autolinker.link(feature.properties['NDMI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FAI</th>\
+                        <td>' + (feature.properties['FAI'] !== null ? autolinker.link(feature.properties['FAI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">BSI</th>\
+                        <td>' + (feature.properties['BSI'] !== null ? autolinker.link(feature.properties['BSI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FDI</th>\
+                        <td>' + (feature.properties['FDI'] !== null ? autolinker.link(feature.properties['FDI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NDVI</th>\
+                        <td>' + (feature.properties['NDVI'] !== null ? autolinker.link(feature.properties['NDVI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">API</th>\
+                        <td>' + (feature.properties['API'] !== null ? autolinker.link(feature.properties['API'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SI</th>\
+                        <td>' + (feature.properties['SI'] !== null ? autolinker.link(feature.properties['SI'].toFixed(6)) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
@@ -400,7 +405,7 @@
                 stroke: false, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(255,0,0,1.0)',
+                fillColor: 'rgba(255,0,4,1.0)',
                 interactive: true,
             }
         }
@@ -436,40 +441,56 @@
             });
             var popupContent = '<table>\
                     <tr>\
-                        <th scope="row">Class</th>\
-                        <td>' + (feature.properties['Class'] !== null ? autolinker.link(feature.properties['Class'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">Year</th>\
+                        <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">id</th>\
-                        <td>' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">Longitude</th>\
+                        <td>' + (feature.properties['Longitude'] !== null ? autolinker.link(feature.properties['Longitude'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Latitude</th>\
+                        <td>' + (feature.properties['Latitude'] !== null ? autolinker.link(feature.properties['Latitude'].toFixed(6)) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">Label</th>\
                         <td>' + (feature.properties['Label'] !== null ? autolinker.link(feature.properties['Label'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Year</th>\
-                        <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Latitude</th>\
-                        <td>' + (feature.properties['Latitude'] !== null ? autolinker.link(feature.properties['Latitude'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Longitude</th>\
-                        <td>' + (feature.properties['Longitude'] !== null ? autolinker.link(feature.properties['Longitude'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">NDVI</th>\
-                        <td>' + (feature.properties['NDVI'] !== null ? autolinker.link(feature.properties['NDVI'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">FDI</th>\
-                        <td>' + (feature.properties['FDI'] !== null ? autolinker.link(feature.properties['FDI'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">NDWI</th>\
+                        <td>' + (feature.properties['NDWI'] !== null ? autolinker.link(feature.properties['NDWI'].toFixed(6)) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">NRD</th>\
-                        <td>' + (feature.properties['NRD'] !== null ? autolinker.link(feature.properties['NRD'].toLocaleString()) : '') + '</td>\
+                        <td>' + (feature.properties['NRD'] !== null ? autolinker.link(feature.properties['NRD'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NDMI</th>\
+                        <td>' + (feature.properties['NDMI'] !== null ? autolinker.link(feature.properties['NDMI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FAI</th>\
+                        <td>' + (feature.properties['FAI'] !== null ? autolinker.link(feature.properties['FAI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">BSI</th>\
+                        <td>' + (feature.properties['BSI'] !== null ? autolinker.link(feature.properties['BSI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FDI</th>\
+                        <td>' + (feature.properties['FDI'] !== null ? autolinker.link(feature.properties['FDI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NDVI</th>\
+                        <td>' + (feature.properties['NDVI'] !== null ? autolinker.link(feature.properties['NDVI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">API</th>\
+                        <td>' + (feature.properties['API'] !== null ? autolinker.link(feature.properties['API'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SI</th>\
+                        <td>' + (feature.properties['SI'] !== null ? autolinker.link(feature.properties['SI'].toFixed(6)) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
@@ -481,7 +502,7 @@
                 stroke: false, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(255,0,0,1.0)',
+                fillColor: 'rgba(255,0,4,1.0)',
                 interactive: true,
             }
         }
@@ -517,40 +538,56 @@
             });
             var popupContent = '<table>\
                     <tr>\
-                        <th scope="row">Class</th>\
-                        <td>' + (feature.properties['Class'] !== null ? autolinker.link(feature.properties['Class'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">Year</th>\
+                        <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">id</th>\
-                        <td>' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">Longitude</th>\
+                        <td>' + (feature.properties['Longitude'] !== null ? autolinker.link(feature.properties['Longitude'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Latitude</th>\
+                        <td>' + (feature.properties['Latitude'] !== null ? autolinker.link(feature.properties['Latitude'].toFixed(6)) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">Label</th>\
                         <td>' + (feature.properties['Label'] !== null ? autolinker.link(feature.properties['Label'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Year</th>\
-                        <td>' + (feature.properties['Year'] !== null ? autolinker.link(feature.properties['Year'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Latitude</th>\
-                        <td>' + (feature.properties['Latitude'] !== null ? autolinker.link(feature.properties['Latitude'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Longitude</th>\
-                        <td>' + (feature.properties['Longitude'] !== null ? autolinker.link(feature.properties['Longitude'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">FDI</th>\
-                        <td>' + (feature.properties['FDI'] !== null ? autolinker.link(feature.properties['FDI'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">NDWI</th>\
+                        <td>' + (feature.properties['NDWI'] !== null ? autolinker.link(feature.properties['NDWI'].toFixed(6)) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">NRD</th>\
-                        <td>' + (feature.properties['NRD'] !== null ? autolinker.link(feature.properties['NRD'].toLocaleString()) : '') + '</td>\
+                        <td>' + (feature.properties['NRD'] !== null ? autolinker.link(feature.properties['NRD'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NDMI</th>\
+                        <td>' + (feature.properties['NDMI'] !== null ? autolinker.link(feature.properties['NDMI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FAI</th>\
+                        <td>' + (feature.properties['FAI'] !== null ? autolinker.link(feature.properties['FAI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">BSI</th>\
+                        <td>' + (feature.properties['BSI'] !== null ? autolinker.link(feature.properties['BSI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">FDI</th>\
+                        <td>' + (feature.properties['FDI'] !== null ? autolinker.link(feature.properties['FDI'].toFixed(6)) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <th scope="row">NDVI</th>\
-                        <td>' + (feature.properties['NDVI'] !== null ? autolinker.link(feature.properties['NDVI'].toLocaleString()) : '') + '</td>\
+                        <td>' + (feature.properties['NDVI'] !== null ? autolinker.link(feature.properties['NDVI'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">API</th>\
+                        <td>' + (feature.properties['API'] !== null ? autolinker.link(feature.properties['API'].toFixed(6)) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SI</th>\
+                        <td>' + (feature.properties['SI'] !== null ? autolinker.link(feature.properties['SI'].toFixed(6)) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
@@ -562,7 +599,7 @@
                 stroke: false, 
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(255,0,0,1.0)',
+                fillColor: 'rgba(255,0,4,1.0)',
                 interactive: true,
             }
         }
@@ -580,16 +617,6 @@
         });
         bounds_group.addLayer(layer_2023_6);
         map.addLayer(layer_2023_6);
-        var osmGeocoder = new L.Control.Geocoder({
-            collapsed: true,
-            position: 'topleft',
-            text: 'Search',
-            title: 'Testing'
-        }).addTo(map);
-        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
-        .className += ' fa fa-search';
-        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
-        .title += 'Search for a place';
         var baseMaps = {};
         L.control.layers(baseMaps,{'<img src="legend/2023_6.png" /> 2023': layer_2023_6,'<img src="legend/2022_5.png" /> 2022': layer_2022_5,'<img src="legend/2021_4.png" /> 2021': layer_2021_4,'<img src="legend/2020_3.png" /> 2020': layer_2020_3,'<img src="legend/2019_2.png" /> 2019': layer_2019_2,'<img src="legend/WilayahStudi_1.png" /> Wilayah Studi': layer_WilayahStudi_1,"Google Satellite": layer_GoogleSatellite_0,}).addTo(map);
         setBounds();
@@ -721,13 +748,13 @@
             sel_Year.size = 5;
             sel_Year.id = "sel_Year";
             // var Year_options_str = "<option value='' data-records='-'' area-records='-' unselected></option>";
-            var Year_options_str = '<option value="2019" data-records="8 piksel" area-records="800 m<sup>2</sup>">2019</option>';
+            var Year_options_str = '<option value="2019" data-records="5 piksel" area-records="500 m<sup>2</sup>">2019</option>';
             sel_Year.onchange = function(){filterFunc()};
             // Year_options_str  += '<option value="2019" data-records="8 piksel" area-records="800 m2">2019</option>';
-            Year_options_str  += '<option value="2020" data-records="4 piksel" area-records="400 m<sup>2</sup>">2020</option>';
-            Year_options_str  += '<option value="2021" data-records="8 piksel" area-records="800 m<sup>2</sup>">2021</option>';
-            Year_options_str  += '<option value="2022" data-records="7 piksel" area-records="700 m<sup>2</sup>">2022</option>';
-            Year_options_str  += '<option value="2023" data-records="6 piksel" area-records="600 m<sup>2</sup>">2023</option>';
+            Year_options_str  += '<option value="2020" data-records="0 piksel" area-records="0 m<sup>2</sup>">2020</option>';
+            Year_options_str  += '<option value="2021" data-records="1 piksel" area-records="100 m<sup>2</sup>">2021</option>';
+            Year_options_str  += '<option value="2022" data-records="3 piksel" area-records="300 m<sup>2</sup>">2022</option>';
+            Year_options_str  += '<option value="2023" data-records="4 piksel" area-records="400 m<sup>2</sup>">2023</option>';
             sel_Year.innerHTML = Year_options_str;
             window.onload = function() {
                 sel_Year.value = "2019"; // Set default ke tahun 2019
@@ -770,7 +797,7 @@
             div_Legenda.id = "legenda";
             // div_JmlArea.className = "filterlabel";
             document.getElementById("menu").appendChild(div_Legenda);
-            div_Legenda.innerHTML = "<b>Legenda</b><br><br><table><tr><th>Layer</th><th>Keterangan</th></tr><tr><td><img src='legend/2019_2.png'></td><td>Piksel yang terdeteksi sebagai sampah plastik</td></tr><tr><td><img src='legend/WilayahStudi_1.png'></td><td>Wilayah studi Pantai Kuta</td></tr></table>";
+            div_Legenda.innerHTML = "<b>Legenda</b><br><br><table class='table1'><tr><th>Layer</th><th>Keterangan</th></tr><tr><td><img src='legend/2019_2.png'></td><td>Piksel yang terdeteksi sebagai sampah plastik</td></tr><tr><td><img src='legend/WilayahStudi_1.png'></td><td>Wilayah studi Pantai Kuta</td></tr></table>";
             // BATAS
         </script>
     </body>
